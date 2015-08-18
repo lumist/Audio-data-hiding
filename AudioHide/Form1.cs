@@ -18,12 +18,16 @@ namespace AudioHide
         public AudioHide()
         {
             InitializeComponent();
+
         }
 
-        private void Open_Click(object sender, EventArgs e)
+        private void Ecnode_Click(object sender, EventArgs e)
         {
-            Audio SrcFile = new Audio(InputURL.Text);
-            Audio KeyFile = new Audio(KeyURL.Text);
+            _instorage = InputURL.Text;
+            _keystorage = KeyURL.Text;
+            _outstorage = OutURL.Text;
+            Audio SrcFile = new Audio(_instorage);
+            Audio KeyFile = new Audio(_keystorage);
             //Audio OutFile = new Audio("C:\\Users\\BIT\\Documents\\programming\\AudioHide\\AudioHide\\TestCase\\Out\\sample.wav");
             Stream MessageStream = null;
             String Message = EmbededData.Text;
@@ -36,7 +40,7 @@ namespace AudioHide
 
             try
             {
-                if (SrcFile.Hide(this.Method.Text[0] - '1', KeyFile.stream, MessageStream))
+                if (SrcFile.Hide(this.Method.Text[0] - '1', KeyFile.stream, MessageStream, _outstorage))
                 {
                     MessageBox.Show("Sucess!");
                     SrcFile.Dispose();
@@ -56,9 +60,12 @@ namespace AudioHide
 
         private void Decode_Click(object sender, EventArgs e)
         {
-            Audio OutFile = new Audio(OutURL.Text);
+            _instorage = InputURL.Text;
+            _keystorage = KeyURL.Text;
+            _outstorage = OutURL.Text;
+            Audio OutFile = new Audio(_outstorage);
             Stream MessageStream = new MemoryStream();
-            FileStream KeyStream = new FileStream(KeyURL.Text,FileMode.Open);
+            FileStream KeyStream = new FileStream(_keystorage,FileMode.Open);
 
             try
             {
@@ -150,9 +157,9 @@ namespace AudioHide
             return read;
         }
 
-        public bool Hide(int mode, FileStream KeyStream, Stream MessageStream)
+        public bool Hide(int mode, FileStream KeyStream, Stream MessageStream,string name)
         {
-            FileStream OutWave = new FileStream(AudioHide.storage + "Out\\Out01.wav", FileMode.Create);
+            FileStream OutWave = new FileStream(name, FileMode.Create);
             SteganoWave.WaveStream AudioStream = new SteganoWave.WaveStream(stream, OutWave); /* 冗余 */
             bytesPerSample = AudioStream.Format.wBitsPerSample / 8;
 

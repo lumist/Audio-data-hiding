@@ -76,7 +76,7 @@
             this.Encode.TabIndex = 3;
             this.Encode.Text = "Encode";
             this.Encode.UseVisualStyleBackColor = true;
-            this.Encode.Click += new System.EventHandler(this.Open_Click);
+            this.Encode.Click += new System.EventHandler(this.Ecnode_Click);
             // 
             // EmbededData
             // 
@@ -150,6 +150,9 @@
         #endregion
 
         public static string storage = "C:\\Users\\BIT\\Documents\\programming\\AudioHide\\AudioHide\\TestCase\\";
+        public static string _instorage = "\\TestCase\\";
+        public static string _outstorage = "\\TestCase\\";
+        public static string _keystorage = "\\TestCase\\";
         private System.Windows.Forms.TextBox InputURL;
         private System.Windows.Forms.TextBox KeyURL;
         private System.Windows.Forms.Button Decode;
